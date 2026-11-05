@@ -544,7 +544,7 @@ void MlxlinkCommander::checkValidFW()
         u_int32_t tmpLocalPort = _localPort;
 
         sendPrmReg(ACCESS_REG_MGIR, REG_GET);
-        sprintf(fwVersion, "%02d.%02d.%04d", getFieldValue("extended_major"), getFieldValue("extended_minor"), getFieldValue("extended_sub_minor"));
+        snprintf(fwVersion, sizeof(fwVersion), "%02d.%02d.%04d", getFieldValue("extended_major"), getFieldValue("extended_minor"), getFieldValue("extended_sub_minor"));
         _fwVersion = string(fwVersion);
 
         if (_userInput._pcie)
@@ -6381,9 +6381,7 @@ string MlxlinkCommander::getBKVVersion()
     {
         return "";
     }
-    char bkvVersion[32];
-    sprintf(bkvVersion, "%d.%d.%d", major, minor, subMinor);
-    return string(bkvVersion);
+    return to_string(major) + "." + to_string(minor) + "." + to_string(subMinor);
 }
 
 string MlxlinkCommander::getDevicePN()
